@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Sam Lucidi</title><link href="mansam.github.io/" rel="alternate"></link><link href="mansam.github.io/feeds/software.atom.xml" rel="self"></link><id>mansam.github.io/</id><updated>2013-11-20T22:28:00-05:00</updated><entry><title>Getting Started with Cucumber</title><link href="mansam.github.io/getting-started-with-cucumber.html" rel="alternate"></link><updated>2013-11-20T22:28:00-05:00</updated><author><name>Sam Lucidi</name></author><id>tag:mansam.github.io,2013-11-20:getting-started-with-cucumber.html</id><summary type="html">
+
+        &lt;h3 id="introduction"&gt;Introduction&lt;/h3&gt;
+
+        &lt;p&gt;&lt;em&gt;Note: This tutorial assumes you have a modern version of Ruby and RubyGems installed. If you don't, try using the &lt;a href="http://rvm.io" title="Ruby Version Manager"&gt;Ruby Version Manager&lt;/a&gt; to install it.&lt;/em&gt;&lt;/p&gt;
+
+        &lt;p&gt;To get started, install Cucumber from RubyGems with the &lt;code&gt;gem&lt;/code&gt; command:&lt;/p&gt;
+
+        &lt;pre class="prettyprint"&gt;&lt;code&gt;$ gem install cucumber
+        &lt;/code&gt;&lt;/pre&gt;
+
+        &lt;p&gt;This will install the Cucumber module along with any of its dependencies. Next, enter your project directory and create a folder called &lt;code&gt;features&lt;/code&gt;, and a subdirectory of it called &lt;code&gt;step_definitions&lt;/code&gt;, and another called &lt;code&gt;support&lt;/code&gt;.&lt;/p&gt;
+
+        &lt;pre class="prettyprint"&gt;&lt;code&gt;$ mkdir -p features/step_definitions
+        &lt;/code&gt;&lt;/pre&gt;
+
+        &lt;pre class="prettyprint"&gt;&lt;code&gt;$ mkdir features/support&lt;/code&gt;&lt;/pre&gt;
+
+        &lt;p&gt;If your project doesn't have a &lt;code&gt;Gemfile&lt;/code&gt; in the root directory, create one. To the exist &lt;code&gt;Gemfile&lt;/code&gt; or newly created one, add the following lines:&lt;/p&gt;
+
+        &lt;pre class="prettyprint"&gt;&lt;code&gt;group :test do
+          gem 'cucumber'
+          gem 'rspec-expectations'
+          end
+        &lt;/code&gt;&lt;/pre&gt;
+
+        &lt;p&gt;In the previously created &lt;code&gt;support&lt;/code&gt; directory, create a file called &lt;code&gt;env.rb&lt;/code&gt;, and add the following lines:&lt;/p&gt;
+
+        &lt;pre class="prettyprint"&gt;&lt;code&gt;# features/support/env.rb
+          # &amp;lt;add any additional imports here&amp;gt;
+          require 'rspec/expectations'
+          World(RSpec::Matchers)
+        &lt;/code&gt;&lt;/pre&gt;
+
+        &lt;p&gt;You've now got Cucumber installed and a skeleton test apparatus set up for your project.
+          You should now run &lt;code&gt;bundle exec cucumber&lt;/code&gt; from the root directory of your project (the folder containing the &lt;code&gt;features&lt;/code&gt; directory) to make sure it's installed correctly, though it won't find any tests yet. If all is well, you should see output like the following:&lt;/p&gt;
+
+          &lt;pre class="prettyprint"&gt;&lt;code&gt;$ bundle exec cucumber
+            0 scenarios
+            0 steps
+            0m0.000s
+          &lt;/code&gt;&lt;/pre&gt;
+
+          &lt;h3 id="creatingfeatures"&gt;Creating Features&lt;/h3&gt;
+
+          &lt;p&gt;In order to use Cucumber meaningfully, you need to describe the features in your project that you would like to test. Cucumber allows you to describe fairly high level features as in an English-like syntax, much like a use case, and then test the implementations that fulfill those use cases. &lt;/p&gt;
+
+          &lt;p&gt;Feature files end with a &lt;code&gt;.feature&lt;/code&gt; extension and live in your project's &lt;code&gt;features&lt;/code&gt; directory. To get started, create a feature file in your features directory. Feature files can have any name you like, but for now try calling it &lt;code&gt;tutorial1.feature&lt;/code&gt;.&lt;/p&gt;
+
+          &lt;p&gt;Before filling out the feature file, lets first look at an example of a simple feature description from the Cucumber official documentation.&lt;/p&gt;
+
+          &lt;h4 id="featuresyntax"&gt;Feature Syntax&lt;/h4&gt;
+
+          &lt;pre class="prettyprint"&gt;&lt;code&gt;Feature: Serve coffee
+            In order to earn money
+            Customers should be able to
+            buy coffee at all times
+
+            Scenario: Buy last coffee
+            Given there are 1 coffees left in the machine
+            And I have deposited 1$
+            When I press the coffee button
+            Then I should be served a coffee
+          &lt;/code&gt;&lt;/pre&gt;
+
+          &lt;p&gt;The first thing to note about this format is that it's entirely human readable. The first line of a feature file, &lt;code&gt;Feature: Serve coffee&lt;/code&gt; in this example, is a header that indicates the name of the feature. This name will appear in the test output with Cucumber is run on your project. The next three lines are actually free-form text; they are their to assist human readers of the feature and help to explain the business case for the feature. It's recommended that these three lines contain a purpose, the user of the feature, and the general action the feature performs.&lt;/p&gt;
+
+          &lt;p&gt;Following the free-form section are one or more Scenarios. Scenarios are written in a Given/When/Then format that &lt;em&gt;is&lt;/em&gt; parsed by Cucumber. These lines describe the preconditions for the specific aspect of the feature to be exercised, the trigger, and the expected output. Rather than being generic, these lines can describe a single specific example, such as what should happen when a single dollar is inserted into the machine.&lt;/p&gt;
+
+          &lt;p&gt;Lets describe a feature for a simple calculator that allows a user to average integers. Open &lt;code&gt;tutorial1.feature&lt;/code&gt; and enter the following lines, referring to the above syntax explanation if necessary. Remember that the first three lines following the &lt;code&gt;Feature:&lt;/code&gt; header are not parsed by Cucumber.&lt;/p&gt;
+
+          &lt;pre class="prettyprint"&gt;&lt;code&gt;Feature: Sum grades
+            In order to discover what my total score is
+            As a student learning Cucumber who is bad at math
+            I want to be able to average a list of my grades
+
+            Scenario:
+            Given that I have a calculator
+            and that I have entered 90 for my first grade
+            and that I have entered 85 for my second grade
+            and that I have entered 98 for my third grade
+            When I press the average button
+            Then the calculator should output 91 as my average
+          &lt;/code&gt;&lt;/pre&gt;
+
+          &lt;p&gt;Once you finished editing &lt;code&gt;tutorial1.feature&lt;/code&gt;, save the file, return to the root of your project directory, and run &lt;code&gt;bundle exec cucumber&lt;/code&gt;. You should see output similar to the following:&lt;/p&gt;
+
+          &lt;pre class="prettyprint"&gt;&lt;code&gt;my_project/ $ bundle exec cucumber
+
+            Feature: Average grades
+            In order to discover what my total score is
+            As a student learning Cucumber who is bad at math
+            I want to be able to average a list of my grades
+
+            Scenario:                                            # features/tutorial1.feature:6
+            Given that I have a calculator                     # features/tutorial1.feature:7
+            And that I have entered 90 for my first grade      # features/tutorial1.feature:8
+            And that I have entered 85 for my second grade     # features/tutorial1.feature:9
+            And that I have entered 98 for my third grade      # features/tutorial1.feature:10
+            When I press the average button                    # features/tutorial1.feature:11
+            Then the calculator should output 91 as my average # features/tutorial1.feature:12
+
+            1 scenario (1 undefined)
+            6 steps (6 undefined)
+            0m0.002s
+
+            You can implement step definitions for undefined steps with these snippets:
+
+            Given(/^that I have a calculator$/) do
+            pending # express the regexp above with the code you wish you had
+            end
+
+            Given(/^that I have entered (\d+) for my first grade$/) do |arg1|
+            pending # express the regexp above with the code you wish you had
+            end
+
+            &amp;lt;...&amp;gt;
+
+            If you want snippets in a different programming language,
+            just make sure a file with the appropriate file extension
+            exists where cucumber looks for step definitions.
+          &lt;/code&gt;&lt;/pre&gt;
+
+          &lt;p&gt;These error messages are an indication from Cucumber that it can't find a step definition for the feature. This makes sense, considering one hasn't been written yet. To rectify this situation, create a file in the &lt;code&gt;features/step_definitions&lt;/code&gt; folder with a &lt;code&gt;.rb&lt;/code&gt; extention, and add the following lines:&lt;/p&gt;
+
+          &lt;pre class="prettyprint"&gt;&lt;code&gt;Given /that I have a calculator/ do
+            @calculator = Calculator.new
+            end
+
+            Given /I have entered (\d+) for my (.*) grade/ do |grade, n|
+            @calculator.add(grade.to_i)
+            end
+
+            When /I press the average button/ do
+            @calculator.average()
+            end
+
+            Then /the calculator should output (\d+) as my average/ do |n|
+            @calculator.grade.should == n.to_i
+            end
+          &lt;/code&gt;&lt;/pre&gt;
+
+          &lt;p&gt;Each of these lines represents a step from the scenario we defined earlier. Each step definition is a function that takes a regular expression matching the natural language steps from the scenario file, with groups such as &lt;code&gt;(\d+)&lt;/code&gt; called out in order to capture arguments or other variable parts of the step. As you can see here, for the grade-entering step, there are two parameters-- the grade value and the ordinal number (first, second) of its position in the list. Note that parameters captured like this are strings, and they must be cast to the appropriate type if you expect them to be integers, floats, or other types.&lt;/p&gt;
+
+          &lt;p&gt;You can see from this step definition how actual implementation can be attached to the human-readable feature description. To try it out, save the step definition file and run &lt;code&gt;bundle exec cucumber&lt;/code&gt; again from the root directory.&lt;/p&gt;
+
+          &lt;pre class="prettyprint"&gt;&lt;code&gt;my_project/ $ bundle exec cucumber
+            Feature: Average grades
+            In order to discover what my total score is
+            As a student learning Cucumber who is bad at math
+            I want to be able to average a list of my grades
+
+            Scenario:                                            # features/tutorial1.feature:6
+            Given that I have a calculator                     # features/step_definitions/tutorial1.rb:1
+            uninitialized constant Calculator (NameError)
+            ./features/step_definitions/tutorial1.rb:2:in `/that I have a calculator/'
+            features/tutorial1.feature:7:in `Given that I have a calculator'
+            And that I have entered 90 for my first grade      # features/step_definitions/tutorial1.rb:5
+            And that I have entered 85 for my second grade     # features/step_definitions/tutorial1.rb:5
+            And that I have entered 98 for my third grade      # features/step_definitions/tutorial1.rb:5
+            When I press the average button                    # features/step_definitions/tutorial1.rb:9
+            Then the calculator should output 91 as my average # features/step_definitions/tutorial1.rb:13
+
+            Failing Scenarios:
+            cucumber features/tutorial1.feature:6 # Scenario:
+
+            1 scenario (1 failed)
+            6 steps (1 failed, 5 skipped)
+            0m0.002s
+          &lt;/code&gt;&lt;/pre&gt;
+
+          &lt;p&gt;As you may have expected, this time the test gets further but fails because we haven't actually implemented the &lt;code&gt;Calculator&lt;/code&gt; class in question. In another Ruby source file, define the Calculator class as follows and then add a &lt;code&gt;require&lt;/code&gt; statement to &lt;code&gt;env.rb&lt;/code&gt; to import the file that contains it. Here's an example implementation that will pass the tests we defined:&lt;/p&gt;
+
+          &lt;pre class="prettyprint"&gt;&lt;code&gt;class Calculator
+            def initialize
+            @sum = 0
+            end
+
+            def add(n)
+            @sum += n
+            end
+
+            def grade
+            return @grade
+            end
+            def grade=(val)
+            @grade = val
+            end
+
+            def average()
+            @grade = (@sum/3.0)
+            end
+            end
+          &lt;/code&gt;&lt;/pre&gt;
+
+          &lt;p&gt;This time, running Cucumber should result in a full set of passed tests, and nice bright green output lines, like the color of a cucumber.&lt;/p&gt;
+
+          &lt;pre class="prettyprint"&gt;&lt;code&gt;Feature: Average grades
+            In order to discover what my total score is
+            As a student learning Cucumber who is bad at math
+            I want to be able to average a list of my grades
+
+            Scenario:                                            # features/tutorial1.feature:6
+            Given that I have a calculator                     # features/step_defininitions/tutorial1.rb:1
+            And that I have entered 90 for my first grade      # features/step_defininitions/tutorial1.rb:5
+            And that I have entered 85 for my second grade     # features/step_defininitions/tutorial1.rb:5
+            And that I have entered 98 for my third grade      # features/step_defininitions/tutorial1.rb:5
+            When I press the average button                    # features/step_defininitions/tutorial1.rb:9
+            Then the calculator should output 91 as my average # features/step_defininitions/tutorial1.rb:13
+
+            1 scenario (1 passed)
+            6 steps (6 passed)
+            0m0.006s
+          &lt;/code&gt;&lt;/pre&gt;
+
+          &lt;h3 id="additionalresources"&gt;Additional Resources&lt;/h3&gt;
+
+          &lt;p&gt;For more help with Cucumber, check out the official site and documentation available at the following links:&lt;/p&gt;
+
+          &lt;ul&gt;
+            &lt;li&gt;&lt;a href="http://cukes.info" title="Cucumber"&gt;Cucumber&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="http://github.com/cucumber/cucumber" title="Cucumber on Github"&gt;Cucumber on GitHub&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="https://github.com/cucumber/cucumber/wiki" title="Official Cucumber Wiki"&gt;Cucumber Documentation&lt;/a&gt;&lt;/li&gt;
+          &lt;/ul&gt;
+    </summary><category term="testing"></category><category term="ruby"></category></entry></feed>

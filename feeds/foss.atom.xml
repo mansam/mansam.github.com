@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Sam Lucidi</title><link href="mansam.github.io/" rel="alternate"></link><link href="mansam.github.io/feeds/foss.atom.xml" rel="self"></link><id>mansam.github.io/</id><updated>2014-02-12T22:28:00-05:00</updated><entry><title>FOSS@RIT Proposal for Sprint 1</title><link href="mansam.github.io/fossrit-proposal-for-sprint-1.html" rel="alternate"></link><updated>2014-02-12T22:28:00-05:00</updated><author><name>Sam Lucidi</name></author><id>tag:mansam.github.io,2014-02-12:fossrit-proposal-for-sprint-1.html</id><summary type="html">
+
+          &lt;p&gt;&lt;code&gt;when&lt;/code&gt; is a more intutive library for dealing with date formatting in Python. The API is inspired by tools like &lt;a href="http://momentjs.com/"&gt;moment.js&lt;/a&gt;.&lt;/p&gt;
+
+          &lt;table class="pure-table"&gt;
+          &lt;tbody&gt;
+          &lt;tr&gt;
+          &lt;td&gt;License&lt;/td&gt;&lt;td&gt;GPL3&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+          &lt;td&gt;Language&lt;/td&gt;&lt;td&gt;Python&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+          &lt;td&gt;Package System&lt;/td&gt;&lt;td&gt;PyPI&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+          &lt;td&gt;Dependencies&lt;/td&gt;&lt;td&gt;None&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+          &lt;td&gt;Upstream Mentor&lt;/td&gt;&lt;td&gt;threebean?&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+          &lt;td&gt;Team Members&lt;/td&gt;&lt;td&gt;mansam&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+          &lt;td&gt;GitHub&lt;/td&gt;&lt;td&gt;&lt;a href="http://github.com/mansam/when"&gt;when&lt;/a&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;/tbody&gt;
+          &lt;/table&gt;
+          &lt;br&gt;
+     </summary><category term="python"></category><category term="development"></category></entry></feed>
