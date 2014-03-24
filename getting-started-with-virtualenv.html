@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/theme/css/pure-min.css">
+    <link rel="stylesheet" href="/theme/css/style.css">
+    <link rel="stylesheet" href="/theme/css/fontello.css">
+    <link href='http://fonts.googleapis.com/css?family=Noto+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link href="http://mansam.github.io/" type="application/atom+xml" rel="alternate" title="Sam Lucidi ATOM Feed">
+      <title> Sam Lucidi </title>
+      <meta charset="utf-8">
+  </head>
+  <body>
+    <div class="pure-g container">
+      <div class="translucent background"></div>
+      <div class="pure-u-1-5 padding-right-5">
+        <div class="contact">
+          <h1><a href="http://mansam.github.io">sam lucidi</a></h1>
+          <p class="bio">
+            A Python developer, open-source hacker, and adventurer from Pottstown, Pennsylvania.
+          </p>
+          <p class="bio">
+            I attend RIT, as part of the Software Engineering class of 2014. I graduated from
+            Montgomery County Community College in 2009.
+          </p>
+          <div>
+            <ul class="contact-methods undecorated">
+              <li class="contact-method">
+                <i class="icon-mail-alt"></i> <a href="mailto:sam@samlucidi.com">email</a>
+              </li>
+              <li class="contact-method">
+                <i class="icon-fork"></i> <a href="https://www.github.com/mansam">github</a>
+              </li>
+              <li class="contact-method">
+                <i class="icon-twitter"></i> <a href="https://www.twitter.com/samlucidi">twitter</a>
+              </li>
+              <li class="contact-method">
+                <i class="icon-linkedin"></i> <a href="https://www.linkedin.com/in/samlucidi">linkedin</a>
+              </li>
+              <li class="contact-method">
+                <i class="icon-lightbulb"></i> <a href="/blog.html">blog</a>
+              </li>
+              <li class="contact-method">
+                <i class="icon-doc-text-inv"></i> <a href="/resume.pdf">résumé</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="pure-u-3-5 faint-left-border">
+        <section id="posts" class="blog">
+	<header>
+		<h3>Posted Mon 10 February 2014</h3>
+	</header>
+	<article>
+		<h1 id="title">
+			<a href="http://mansam.github.io/getting-started-with-virtualenv.html" rel="bookmark"
+				title="Permalink to Getting Started with Virtualenv">Getting Started with Virtualenv</a>
+		</h1>
+		
+<!--  BEGIN ARTICLE CONTENT -->
+<p>Python is distributed as part of the base distribution for most UNIX-like operating systems out there, including OS X. The default install is great for built in system packages and quick scripts, but you don't usually get to choose the version of the system Python, and you usually need root permission in order to install new packages from <a href="https://pypi.python.org">the Python Package Index</a>. Even if you don't mind installing new packages as root, it also means that you are locked into just one version of each installed package,
+          which can make managing dependencies for different projects tough.</p>
+<p>To make it easier to install and manage different versions of Python and its packages, many Pythonistas recommend the use of <a href="http://www.virtualenv.org/en/latest/">virtualenvs</a>. <code>virtualenv</code> is a fantastic tool that lets you create sandboxed environments for each of your projects, and each environment can have its own version of Python and its own set of packages. Getting it set up can be a little confusing the first time, so here's the general process:</p>
+<p><em>Note that this guide assumes you use a bash-compatible shell. Things
+          are a little different if you are using something like, say, <a href="http://fishshell.com/">fish</a></em></p>
+<ol>
+<li><p>Use pip to install <code>virtualenv</code> and <code>virtualenvwrapper</code>. You'll probably need to use <code>sudo</code> or otherwise give yourself root permissions to do this, since you're installing these tools with the system Python. </p>
+<p><em>(If your system doesn't have <code>pip</code> installed or you are used to <code>easy_install</code>, I'd recommend first installing it with <code>easy_install pip</code>, and then never using <code>easy_install</code> again. (<code>easy_install</code> is obsolete, and besides: <code>pip</code> cleans up after itself quite a bit better and is better for dealing with versioning.)</em></p>
+<pre class="prettyprint"><code>$ sudo pip install virtualenv
+$ sudo pip install virtualenvwrapper
+          </code></pre></li>
+<li><p>Next, you can create a directory where you'd like your environments to live. I prefer something like 'envs' or 'environments' in my home directory.
+          You'll also need to add an environment variable so that virtualenv knows
+          where to put things.</p>
+<pre class="prettyprint"><code>$ mkdir ~/envs
+$ export WORKON_HOME=~/envs
+          </code></pre></li>
+<li><p>Lastly, source the <code>virtualenvwrapper.sh</code> script that pip installed earlier. This adds a bunch of handy management functions to your shell.</p>
+<pre class="prettyprint"><code>$ source /usr/local/bin/virtualenvwrapper.sh
+          </code></pre></li>
+</ol>
+<p>At this point, you're good to go with virtualenv. Create one for your to experiment with using the <code>mkvirtualenv</code> command that the wrapper set up for you. You'll wind up with a prompt telling you which environment you're working on. Note that it adds a helpful identifier to your prompt to tell you which environment you are in.</p>
+<pre class="prettyprint"><code>$ mkvirtualenv sandbox
+$ workon sandbox
+(sandbox) $
+          </code></pre>
+<p>You can jump out of your virtualenv with <code>deactivate</code>. From now on, typing <code>workon sandbox</code> will put you into the environment you created, and deactivate will take you out. Same goes for any more environments you create with <code>mkvirtualenv</code>. Conveniently, your shell will tab complete your virtualenv names after you type <code>workon</code>. </p>
+<p>By default, new virtualenvs will use your system default Python. If you want to use different version of Python in each of your virtualenvs, that's easy too. Just pass the <code>-p</code> flag to <code>mkvirtualenv</code> with the path to the version you want, and all work you do in that environment will be with the selected Python version.</p>
+<pre class="prettyprint"><code>$ mkvirtualenv -p /usr/bin/python3.3 sandbox3
+$ workon sandbox3
+(sandbox3) $ python --version
+Python 3.3.3
+          </code></pre>
+<p>Each virtualenv will keep its own package cache and use its own copy of <code>pip</code>. This is convenient because it allows you to keep different sets of packages with different versions separate from each other in order to accomodate disparate packages with conflicting dependencies.</p>
+<!--  END OF ARTICLE CONTENT  -->
+
+
+		<div id="article_meta">
+				Category:
+					<a href="http://mansam.github.io/category/software.html">Software</a>
+				<br />Tags:
+					<a href="http://mansam.github.io/tag/python.html">python</a>
+		</div>
+	</article>
+
+	<footer>
+		<a href="http://mansam.github.io/" class="button_accent">&larr;&nbsp;&nbsp;&nbsp;Back</a>
+	</footer>
+
+
+        </section>
+      </div>
+    </div>
+          <div class="pure-u-1-2 attribution" xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/" about="http://subtlepatterns.com/">
+        <span property="dct:title">Subtle Patterns</span> (<a rel="cc:attributionURL" property="cc:attributionName" href="http://subtlepatterns.com">Subtle Patterns</a>) / <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>
+      </div>
+  </body>
+</html>

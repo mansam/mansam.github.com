@@ -159,6 +159,6 @@ p.bio {
   margin-right: .5em;
 }
 
-h1 {
-  max-width: 18em;
+h1, h2, h3 {
+  max-width: 33em;
 }

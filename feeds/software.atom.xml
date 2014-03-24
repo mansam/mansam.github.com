@@ -1,5 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Sam Lucidi</title><link href="mansam.github.io/" rel="alternate"></link><link href="mansam.github.io/feeds/software.atom.xml" rel="self"></link><id>mansam.github.io/</id><updated>2013-11-20T22:28:00-05:00</updated><entry><title>Getting Started with Cucumber</title><link href="mansam.github.io/getting-started-with-cucumber.html" rel="alternate"></link><updated>2013-11-20T22:28:00-05:00</updated><author><name>Sam Lucidi</name></author><id>tag:mansam.github.io,2013-11-20:getting-started-with-cucumber.html</id><summary type="html">
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Sam Lucidi</title><link href="http://mansam.github.io/" rel="alternate"></link><link href="http://mansam.github.io/feeds/software.atom.xml" rel="self"></link><id>http://mansam.github.io/</id><updated>2014-02-10T00:00:00-05:00</updated><entry><title>Getting Started with Virtualenv</title><link href="http://mansam.github.io/getting-started-with-virtualenv.html" rel="alternate"></link><updated>2014-02-10T00:00:00-05:00</updated><author><name>Sam Lucidi</name></author><id>tag:mansam.github.io,2014-02-10:getting-started-with-virtualenv.html</id><summary type="html">
+&lt;!--  BEGIN ARTICLE CONTENT --&gt;
+&lt;p&gt;Python is distributed as part of the base distribution for most UNIX-like operating systems out there, including OS X. The default install is great for built in system packages and quick scripts, but you don't usually get to choose the version of the system Python, and you usually need root permission in order to install new packages from &lt;a href="https://pypi.python.org"&gt;the Python Package Index&lt;/a&gt;. Even if you don't mind installing new packages as root, it also means that you are locked into just one version of each installed package,
+          which can make managing dependencies for different projects tough.&lt;/p&gt;
+&lt;p&gt;To make it easier to install and manage different versions of Python and its packages, many Pythonistas recommend the use of &lt;a href="http://www.virtualenv.org/en/latest/"&gt;virtualenvs&lt;/a&gt;. &lt;code&gt;virtualenv&lt;/code&gt; is a fantastic tool that lets you create sandboxed environments for each of your projects, and each environment can have its own version of Python and its own set of packages. Getting it set up can be a little confusing the first time, so here's the general process:&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Note that this guide assumes you use a bash-compatible shell. Things
+          are a little different if you are using something like, say, &lt;a href="http://fishshell.com/"&gt;fish&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Use pip to install &lt;code&gt;virtualenv&lt;/code&gt; and &lt;code&gt;virtualenvwrapper&lt;/code&gt;. You'll probably need to use &lt;code&gt;sudo&lt;/code&gt; or otherwise give yourself root permissions to do this, since you're installing these tools with the system Python. &lt;/p&gt;
+&lt;p&gt;&lt;em&gt;(If your system doesn't have &lt;code&gt;pip&lt;/code&gt; installed or you are used to &lt;code&gt;easy_install&lt;/code&gt;, I'd recommend first installing it with &lt;code&gt;easy_install pip&lt;/code&gt;, and then never using &lt;code&gt;easy_install&lt;/code&gt; again. (&lt;code&gt;easy_install&lt;/code&gt; is obsolete, and besides: &lt;code&gt;pip&lt;/code&gt; cleans up after itself quite a bit better and is better for dealing with versioning.)&lt;/em&gt;&lt;/p&gt;
+&lt;pre class="prettyprint"&gt;&lt;code&gt;$ sudo pip install virtualenv
+$ sudo pip install virtualenvwrapper
+          &lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Next, you can create a directory where you'd like your environments to live. I prefer something like 'envs' or 'environments' in my home directory.
+          You'll also need to add an environment variable so that virtualenv knows
+          where to put things.&lt;/p&gt;
+&lt;pre class="prettyprint"&gt;&lt;code&gt;$ mkdir ~/envs
+$ export WORKON_HOME=~/envs
+          &lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Lastly, source the &lt;code&gt;virtualenvwrapper.sh&lt;/code&gt; script that pip installed earlier. This adds a bunch of handy management functions to your shell.&lt;/p&gt;
+&lt;pre class="prettyprint"&gt;&lt;code&gt;$ source /usr/local/bin/virtualenvwrapper.sh
+          &lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;At this point, you're good to go with virtualenv. Create one for your to experiment with using the &lt;code&gt;mkvirtualenv&lt;/code&gt; command that the wrapper set up for you. You'll wind up with a prompt telling you which environment you're working on. Note that it adds a helpful identifier to your prompt to tell you which environment you are in.&lt;/p&gt;
+&lt;pre class="prettyprint"&gt;&lt;code&gt;$ mkvirtualenv sandbox
+$ workon sandbox
+(sandbox) $
+          &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You can jump out of your virtualenv with &lt;code&gt;deactivate&lt;/code&gt;. From now on, typing &lt;code&gt;workon sandbox&lt;/code&gt; will put you into the environment you created, and deactivate will take you out. Same goes for any more environments you create with &lt;code&gt;mkvirtualenv&lt;/code&gt;. Conveniently, your shell will tab complete your virtualenv names after you type &lt;code&gt;workon&lt;/code&gt;. &lt;/p&gt;
+&lt;p&gt;By default, new virtualenvs will use your system default Python. If you want to use different version of Python in each of your virtualenvs, that's easy too. Just pass the &lt;code&gt;-p&lt;/code&gt; flag to &lt;code&gt;mkvirtualenv&lt;/code&gt; with the path to the version you want, and all work you do in that environment will be with the selected Python version.&lt;/p&gt;
+&lt;pre class="prettyprint"&gt;&lt;code&gt;$ mkvirtualenv -p /usr/bin/python3.3 sandbox3
+$ workon sandbox3
+(sandbox3) $ python --version
+Python 3.3.3
+          &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Each virtualenv will keep its own package cache and use its own copy of &lt;code&gt;pip&lt;/code&gt;. This is convenient because it allows you to keep different sets of packages with different versions separate from each other in order to accomodate disparate packages with conflicting dependencies.&lt;/p&gt;
+&lt;!--  END OF ARTICLE CONTENT  --&gt;
+</summary><category term="python"></category></entry><entry><title>Getting Started with Cucumber</title><link href="http://mansam.github.io/getting-started-with-cucumber.html" rel="alternate"></link><updated>2013-11-20T22:28:00-05:00</updated><author><name>Sam Lucidi</name></author><id>tag:mansam.github.io,2013-11-20:getting-started-with-cucumber.html</id><summary type="html">
 
         &lt;h3 id="introduction"&gt;Introduction&lt;/h3&gt;
 
