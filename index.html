@@ -3,13 +3,13 @@
         <style>
             body {
                 background-color: 0;
-                color: green;
+                color: grey;
                 font-family: monospace;
             }
             blink {
                 animation: 2s linear infinite blink_effect;
             }
-            
+
             @keyframes blink_effect {
                 0% {
                     visibility: hidden;
@@ -22,9 +22,47 @@
                 }
             }
         </style>
-        <title>C:DOS&gt;</title>
+        <title>slucidi@io&gt;</title>
     </head>
-    <body>
-        <p>C:DOS&gt; <blink>_</blink></p>
+    <body style="width: 66em;">
+        <p><span style="color: white">[</span><span style="color: cyan">slucidi@io</span><span style="color: white">]#</span> less virtualenvwrapper.html<blink>_</blink></p>
+
+        <div class="article" style="color: #ddd;">
+          <!--  BEGIN ARTICLE CONTENT -->
+          <p>Python is distributed as part of the base distribution for most UNIX-like operating systems out there, including OS X. The default install is great for built in system packages and quick scripts, but you don't usually get to choose the version of the system Python, and you usually need root permission in order to install new packages from <a href="https://pypi.python.org">the Python Package Index</a>. Even if you don't mind installing new packages as root, it also means that you are locked into just one version of each installed package,
+                    which can make managing dependencies for different projects tough.</p>
+          <p>To make it easier to install and manage different versions of Python and its packages, many Pythonistas recommend the use of <a href="http://www.virtualenv.org/en/latest/">virtualenvs</a>. <code>virtualenv</code> is a fantastic tool that lets you create sandboxed environments for each of your projects, and each environment can have its own version of Python and its own set of packages. Getting it set up can be a little confusing the first time, so here's the general process:</p>
+          <p><em>Note that this guide assumes you use a bash-compatible shell. Things
+                    are a little different if you are using something like, say, <a href="http://fishshell.com/">fish</a></em></p>
+          <ol>
+          <li><p>Use pip to install <code>virtualenv</code> and <code>virtualenvwrapper</code>. You'll probably need to use <code>sudo</code> or otherwise give yourself root permissions to do this, since you're installing these tools with the system Python. </p>
+          <p><em>(If your system doesn't have <code>pip</code> installed or you are used to <code>easy_install</code>, I'd recommend first installing it with <code>easy_install pip</code>, and then never using <code>easy_install</code> again. (<code>easy_install</code> is obsolete, and besides: <code>pip</code> cleans up after itself quite a bit better and is better for dealing with versioning.)</em></p>
+          <pre class="prettyprint"><code>$ sudo pip install virtualenv
+$ sudo pip install virtualenvwrapper
+                    </code></pre></li>
+          <li><p>Now, source the <code>virtualenvwrapper.sh</code> script that pip installed earlier in your <code>.bashrc</code> or other shell configuration. This adds a bunch of handy management functions to your shell. Adding this line will do the trick in bash or zsh.</p>
+          <pre class="prettyprint"><code>$ source /usr/local/bin/virtualenvwrapper.sh
+                    </code></pre></li>
+          </ol>
+          <p>At this point, you're good to go with virtualenv. Create one for your to experiment with using the <code>mkvirtualenv</code> command that the wrapper set up for you. You'll wind up with a prompt telling you which environment you're working on. Note that it adds a helpful identifier to your prompt to tell you which environment you are in.</p>
+          <pre class="prettyprint"><code>
+      $ mkvirtualenv sandbox
+      $ workon sandbox
+      (sandbox) $
+                    </code></pre>
+          <p>You can jump out of your virtualenv with <code>deactivate</code>. From now on, typing <code>workon sandbox</code> will put you into the environment you created, and deactivate will take you out. Same goes for any more environments you create with <code>mkvirtualenv</code>. Conveniently, your shell will tab complete your virtualenv names after you type <code>workon</code>. </p>
+          <p>By default, new virtualenvs will use your system default Python. If you want to use different version of Python in each of your virtualenvs, that's easy too. Just pass the <code>-p</code> flag to <code>mkvirtualenv</code> with the path to the version you want, and all work you do in that environment will be with the selected Python version.</p>
+          <pre class="prettyprint"><code>
+      $ mkvirtualenv -p /usr/bin/python3.3 sandbox3
+      $ workon sandbox3
+      (sandbox3) $ python --version
+      Python 3.3.3
+                    </code></pre>
+          <p>Each virtualenv will keep its own package cache and use its own copy of <code>pip</code>. This is convenient because it allows you to keep different sets of packages with different versions separate from each other in order to accomodate disparate packages with conflicting dependencies.</p>
+          <!--  END OF ARTICLE CONTENT  -->
+
+
+          :
+        </div>
     </body>
 </html>
